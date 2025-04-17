@@ -1,5 +1,6 @@
 import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
+import { OAuthSignInButtons } from "@/components/oauth-sign-in-buttons";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +17,19 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
           Sign up
         </Link>
       </p>
-      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+      
+      {/* OAuth Sign-In Buttons */}
+      <div className="mt-8 space-y-4">
+        <OAuthSignInButtons />
+        
+        <div className="relative flex items-center justify-center">
+          <div className="border-t border-gray-300 flex-grow"></div>
+          <span className="px-2 text-xs text-gray-500">OR</span>
+          <div className="border-t border-gray-300 flex-grow"></div>
+        </div>
+      </div>
+      
+      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-4">
         <Label htmlFor="email">Email</Label>
         <Input name="email" placeholder="you@example.com" required />
         <div className="flex justify-between items-center">

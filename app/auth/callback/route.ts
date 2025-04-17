@@ -12,7 +12,15 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data: { session } } = await supabase.auth.exchangeCodeForSession(code);
+
+    // Generate and set unique ID for OAuth users if they don't have one
+    if (session && !session.user.user_metadata?.unique_id) {
+      const uniqueId = `0x${Math.random().toString(36).substring(2, 10)}${Math.random().toString(36).substring(2, 10)}`.toUpperCase();
+      await supabase.auth.updateUser({
+        data: { unique_id: uniqueId }
+      });
+    }
   }
 
   if (redirectTo) {
